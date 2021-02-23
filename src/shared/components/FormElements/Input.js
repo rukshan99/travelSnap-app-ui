@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect } from 'react';
 
-import { validate } from '../../components/util/validators';
+import { validate } from '../../util/validators';
 import './Input.css';
 
 const inputReducer = (state, action) => {
@@ -23,7 +23,11 @@ const inputReducer = (state, action) => {
 
 const Input = props => {
 
-    const [inputState, dispatch] = useReducer(inputReducer, {value: '', isValid: false, isTouched: false});
+    const [inputState, dispatch] = useReducer(inputReducer, {
+        value: props.initialValue || '', 
+        isValid: props.initialValid || false, 
+        isTouched: false
+    });
 
     const { id, onInput } = props;
     const { value,  isValid } = inputState;
@@ -45,7 +49,7 @@ const Input = props => {
     <input id={props.id} type={props.type} placeholder={props.placeholder} onChange={changeHandler} onBlur={touchHandler} value={inputState.value}
     />
         ) : (
-        <textarea id={props.id} rows={props.rows || 3} onChange={changeHandler} onBlur={touchHandler} value={inputState.value}/>
+        <textarea id={props.id} rows={props.rows || 3} onChange={changeHandler} onBlur={touchHandler} value={inputState.value} />
         );
 
         return(

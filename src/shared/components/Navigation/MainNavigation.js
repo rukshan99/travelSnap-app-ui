@@ -32,9 +32,9 @@ const MainNavigation = props => {
                     <span />
                     <span />
                 </button>
-                <Link to="/">
-                    <h1 className="main-navigation__title">travelSnap.</h1>
-                </Link>
+            <h1 className="main-navigation__title">
+                <Link to="/">travelSnap.</Link>
+            </h1>
                 <nav className="main-navigation__header-nav">
                     <NavLinks />
                 </nav>
