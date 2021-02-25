@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Input from '../../shared/components/FormElements/Input';
-import Button from '../../shared/components/FormElements/Button'
+import Button from '../../shared/components/FormElements/Button';
 import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hooks';
 import './placeForm.css';

@@ -2,6 +2,7 @@ import React from 'react';
 
 import Card from '../../shared/components/UIElements/Card';
 import PlaceItem from './PlaceItem';
+import Button from '../../shared/components/FormElements/Button';
 import './PlaceList.css';
 
 const PlaceList = props => {
@@ -9,7 +10,7 @@ const PlaceList = props => {
         return <div className="place-list center">
             <Card>
                 <h2>No places found!</h2>
-                <button>Share a place</button>
+                <Button to="/places/new">Share a place</Button>
             </Card>
         </div>
     }
