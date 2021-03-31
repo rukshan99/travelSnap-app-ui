@@ -3,6 +3,9 @@ import React, { useState, useContext } from 'react';
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import Card from '../../shared/components/UIElements/Card';
+import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
+
 import { useForm } from '../../shared/hooks/form-hooks';
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/util/validators';
 import { AuthContext } from '../../shared/context/auth-context';
@@ -11,6 +14,8 @@ import './SignIn.css';
 const SignIn = () => {
     const auth = useContext(AuthContext);
     const [isSignInMode, setIsSignInMode] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState();
 
     const [formState, inputHandler, setFormData] = useForm(
         {
@@ -33,6 +38,7 @@ const SignIn = () => {
 
         } else {
             try {
+                setIsLoading(true);
                 const response = await fetch('http://localhost:5000/api/users/signup', {
                     method: 'POST',
                     headers: {
@@ -46,13 +52,15 @@ const SignIn = () => {
                 });
 
                 const responseData = await response.json();
+                setIsLoading(false);
+                auth.SignIn(); 
             } catch(err) {
                 console.log(err);
+                setIsLoading(false);
+                setError(err.message);
             }
             
         }
-        
-        auth.SignIn(); 
     };
 
     const switchModeHandler = () => {
@@ -78,6 +86,7 @@ const SignIn = () => {
 
     return (
         <Card className="authentication">
+            {isLoading && <LoadingSpinner asOverlay/>}
             <h2>Please Sign in</h2>
             <hr />
             <form onSubmit={signInSubmitHandler}>
