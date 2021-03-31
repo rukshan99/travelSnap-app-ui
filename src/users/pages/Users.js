@@ -7,7 +7,7 @@ const Users = () => {
         {
             id: 'user001',
             name: 'Rukshan Jayasekara',
-            image: 'https://scontent.fcmb2-1.fna.fbcdn.net/v/t1.0-9/82815802_258830861753265_407311067442577408_o.jpg?_nc_cat=107&ccb=3&_nc_sid=a4a2d7&_nc_ohc=-HTvKc0akLoAX_SS3OR&_nc_ht=scontent.fcmb2-1.fna&oh=7c1724ec45683b770b88c29134a61c11&oe=60561C07',
+            image: 'https://scontent.fcmb4-1.fna.fbcdn.net/v/t1.6435-9/80344383_249388319364186_3624819842248343552_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=6Z1rhZ9uhuYAX9ardBt&_nc_ht=scontent.fcmb4-1.fna&oh=633c2cfbb7aec39d49d2259944ba0297&oe=60899200',
             places: 3   
             }
 ];

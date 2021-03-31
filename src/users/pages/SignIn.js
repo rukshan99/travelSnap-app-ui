@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import Card from '../../shared/components/UIElements/Card';
 import { useForm } from '../../shared/hooks/form-hooks';
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/util/validators';
+import { AuthContext } from '../../shared/context/auth-context';
 import './SignIn.css';
 
 const SignIn = () => {
+    const auth = useContext(AuthContext);
     const [isSignInMode, setIsSignInMode] = useState(true);
 
     const [formState, inputHandler, setFormData] = useForm(
@@ -24,9 +26,33 @@ const SignIn = () => {
         false
     );
 
-    const signInSubmitHandler = event => {
+    const signInSubmitHandler = async event => {
         event.preventDefault();
-        console.log(formState.inputs); // Will send the inputs to backend later.
+
+        if(isSignInMode) {
+
+        } else {
+            try {
+                const response = await fetch('http://localhost:5000/api/users/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: formState.inputs.name.value,
+                        email: formState.inputs.email.value,
+                        password: formState.inputs.password.value
+                    })
+                });
+
+                const responseData = await response.json();
+            } catch(err) {
+                console.log(err);
+            }
+            
+        }
+        
+        auth.SignIn(); 
     };
 
     const switchModeHandler = () => {

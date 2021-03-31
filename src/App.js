@@ -19,30 +19,49 @@ const App = () => {
     setIsSignedIn(false);
   }, []);
 
+  let routes;
+
+  if(isSignedIn) {
+    routes = (
+      <Switch>
+        <Route path="/" exact>
+              <Users />
+        </Route>
+        <Route path="/:userId/places">
+              <UserPlaces />
+        </Route>
+        <Route path="/places/new" exact>
+              <NewPlace />
+        </Route>
+        <Route path="/places/:placeId" exact>
+              <UpdatePlace />
+        </Route>
+        <Redirect to="/" />
+      </Switch>
+    );
+  }
+  else {
+    routes = (
+      <Switch>
+        <Route path="/" exact>
+              <Users />
+        </Route>
+        <Route path="/:userId/places">
+              <UserPlaces />
+        </Route>
+        <Route path="/auth">
+              <SignIn />
+        </Route>
+        <Redirect to="/auth" />
+      </Switch>
+    );
+  }
+
   return ( 
-    <AuthContext.Provider vlaue={{isSignedIn: isSignedIn, signIn: signIn, signOut: signOut}}>
+    <AuthContext.Provider vlaue={{ isSignedIn: isSignedIn, signIn: signIn, signOut: signOut }}>
       <Router>
         <MainNavigation />
-        <main>
-          <Switch>
-            <Route path="/" exact>
-              <Users />
-            </Route>
-            <Route path="/auth">
-              <SignIn />
-            </Route>
-            <Route path="/:userId/places">
-              <UserPlaces />
-            </Route>
-            <Route path="/places/new" exact>
-              <NewPlace />
-            </Route>
-            <Route path="/places/:placeId" exact>
-              <UpdatePlace />
-            </Route>
-            <Redirect to="/" />
-          </Switch>
-        </main>
+        <main>{routes}</main>
       </Router>
     </AuthContext.Provider>
   );
