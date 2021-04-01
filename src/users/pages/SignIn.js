@@ -34,11 +34,35 @@ const SignIn = () => {
     const signInSubmitHandler = async event => {
         event.preventDefault();
 
+        setIsLoading(true);
+
         if(isSignInMode) {
+            try {
+                const response = await fetch('http://localhost:5000/api/users/signin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: formState.inputs.email.value,
+                        password: formState.inputs.password.value
+                    })
+                });
+
+                const responseData = await response.json();
+                if(!response.ok) {
+                    throw new Error(responseData.message);
+                }
+                setIsLoading(false);
+                auth.SignIn(); 
+            } catch(err) {
+                console.log(err);
+                setIsLoading(false);
+                setError(err.message);
+            }
 
         } else {
             try {
-                setIsLoading(true);
                 const response = await fetch('http://localhost:5000/api/users/signup', {
                     method: 'POST',
                     headers: {
@@ -52,6 +76,9 @@ const SignIn = () => {
                 });
 
                 const responseData = await response.json();
+                if(!response.ok) {
+                    throw new Error(responseData.message);
+                }
                 setIsLoading(false);
                 auth.SignIn(); 
             } catch(err) {
@@ -59,7 +86,6 @@ const SignIn = () => {
                 setIsLoading(false);
                 setError(err.message);
             }
-            
         }
     };
 
@@ -84,7 +110,13 @@ const SignIn = () => {
         setIsSignInMode(prevMode => !prevMode);
     };
 
+    const errorHandler = () => {
+        setError(null);
+    }
+
     return (
+        <React.Fragment>
+        <ErrorModal error={error} onClear={errorHandler}/>    
         <Card className="authentication">
             {isLoading && <LoadingSpinner asOverlay/>}
             <h2>Please Sign in</h2>
@@ -123,6 +155,7 @@ const SignIn = () => {
             </form>
             <Button inverse onClick={switchModeHandler}>{isSignInMode ? 'Sign up' : 'Sign in'}</Button>
         </Card>
+        </React.Fragment>
     );
 };
 
