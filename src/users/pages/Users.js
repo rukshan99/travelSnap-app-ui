@@ -10,7 +10,7 @@ const Users = () => {
     const [loadedUsers,  setLoadedUsers] = useState();
     
     useEffect(() => {
-        const sendRequest = () => {
+        const sendRequest = async () => {
             setIsLoading(true);
 
             try {
@@ -33,7 +33,7 @@ const Users = () => {
     const errorHandler = () => {
         setError(null);
     };
-    return 
+    return (
         <React.fragment>
             <ErrorModal error={error} onClear={errorHandler}/>
             {isLoading && (
@@ -42,7 +42,7 @@ const Users = () => {
                 </div>
             )}
             {!isLoading && loadedUsers && <UsersList items={loadedUsers}/>}
-        </React.fragment>;
-};
+        </React.fragment>
+    )};
 
 export default Users;
