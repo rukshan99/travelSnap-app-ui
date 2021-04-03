@@ -31,44 +31,6 @@ const SignIn = () => {
         false
     );
 
-    const signInSubmitHandler = async event => {
-        event.preventDefault();
-
-        if(isSignInMode) {
-            try{
-                await sendRequest(
-                    'http://localhost:5000/api/users/signin', 
-                    'POST', 
-                    JSON.stringify({
-                        email: formState.inputs.email.value,
-                        password: formState.inputs.password.value
-                    }),
-                    {
-                        'Content-Type': 'application/json'
-                    }
-                );
-
-                auth.SignIn(); 
-            } catch (err) {}
-        } else {
-            try {
-                await sendRequest(
-                    'http://localhost:5000/api/users/signup', 
-                    'POST',
-                    JSON.stringify({
-                        name: formState.inputs.name.value,
-                        email: formState.inputs.email.value,
-                        password: formState.inputs.password.value
-                    }),
-                    {
-                        'Content-Type': 'application/json',
-                    }
-                );
-                auth.SignIn(); 
-            } catch(err) {}
-        }
-    };
-
     const switchModeHandler = () => {
         if(!isSignInMode) {
             setFormData(
@@ -90,6 +52,44 @@ const SignIn = () => {
         setIsSignInMode(prevMode => !prevMode);
     };
 
+    const signInSubmitHandler = async event => {
+        event.preventDefault();
+
+        if(isSignInMode) {
+            try{
+                const responseData = await sendRequest(
+                    'http://localhost:5000/api/users/signin', 
+                    'POST', 
+                    JSON.stringify({
+                        email: formState.inputs.email.value,
+                        password: formState.inputs.password.value
+                    }),
+                    {
+                        'Content-Type': 'application/json'
+                    }
+                );
+
+                auth.SignIn(responseData.user.id); 
+            } catch (err) {}
+        } else {
+            try {
+                const responseData = await sendRequest(
+                    'http://localhost:5000/api/users/signup', 
+                    'POST',
+                    JSON.stringify({
+                        name: formState.inputs.name.value,
+                        email: formState.inputs.email.value,
+                        password: formState.inputs.password.value
+                    }),
+                    {
+                        'Content-Type': 'application/json',
+                    }
+                );
+                auth.SignIn(responseData.user.id); 
+            } catch(err) {}
+        }
+    };
+    
     return (
         <React.Fragment>
         <ErrorModal error={error} onClear={clearError}/>    
