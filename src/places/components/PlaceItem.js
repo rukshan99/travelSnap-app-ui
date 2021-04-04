@@ -35,6 +35,7 @@ const PlaceItem = props => {
 
     return (
         <React.Fragment>
+            <ErrorModal error={error} onClear={clearError}/> 
             <Modal
                 show={showMap}
                 onCancel={closeMap}
@@ -57,6 +58,7 @@ const PlaceItem = props => {
             </Modal>
             <li className="place-item">
                 <Card className="place-item__content">
+                    {isLoading && <LoadingSpinner asOverlay />}
                     <div className="place-item__image">
                         <img src={props.image} alt={props.title} />
                     </div>
