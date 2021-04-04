@@ -69,8 +69,8 @@ const PlaceItem = props => {
                     </div>
                     <div className="place-item__actions">
                     <Button inverse onClick={openMap}>View on Map</Button>
-                    <Button to={`/places/${props.id}`}>Edit</Button>
-                    <Button danger onClick={showDeleteWarning}>Delete</Button>
+                    {auth.userId === props.id && (<Button to={`/places/${props.id}`}>Edit</Button>)}
+                    {auth.userId === props.id && (<Button danger onClick={showDeleteWarning}>Delete</Button>)}
                     </div>
                 </Card>
             </li>

@@ -123,8 +123,8 @@ const SignIn = () => {
                     element="input" 
                     type="password" 
                     lable="Password" 
-                    validators={[VALIDATOR_MINLENGTH(8)]} 
-                    errorText="Password should be at least 8 characters long." 
+                    validators={[VALIDATOR_MINLENGTH(6)]} 
+                    errorText="Password should be at least 6 characters long." 
                     onInput={inputHandler}
                 />
                 <Button type="submit" disabled={!formState.isValid}>{isSignInMode ? 'Sign in' : 'Sign up'}</Button>

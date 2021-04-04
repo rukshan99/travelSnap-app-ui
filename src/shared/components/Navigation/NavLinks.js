@@ -32,7 +32,7 @@ else {
       </li>
       {auth.isSignedIn && (
         <li>
-          <NavLink to="/u1/places">My places</NavLink>
+          <NavLink to={`/${auth.userId}/places`}>My places</NavLink>
         </li>
       )}
       {auth.isSignedIn && (
